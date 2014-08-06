@@ -53,32 +53,30 @@ function Bar:Update()
 		count = count - 2
 	end
 
-	local full = count == 5
+	local full = count == 5 and ShamanChiSpin
 	self.hasHarmony = full
 
 	for i = 1, 5 do
 		local Orb = self[i]
 		Set(Orb, i <= count)
-		if ShamanChiSpin then
-			if full then
-				Orb.spin:Play()
-			else
-				Orb.spin:Finish()
-			end
+		if full then
+			Orb.spin:Play()
+		else
+			Orb.spin:Finish()
 		end
 	end
 end
 
 Bar:SetScript("OnEvent", function(self, event)
 	if event ~= "UNIT_AURA" then
-		local spec = GetSpecialization()
-		if spec == 1 then -- Elemental
+		local spec, level = GetSpecialization(), UnitLevel("player")
+		if spec == 1 and level >= 20 then -- Elemental
 			buff = LIGHTNING_SHIELD
 			Bar:Show()
-		elseif spec == 2 then -- Enhancement
+		elseif spec == 2 and level >= 50 then -- Enhancement
 			buff = MAELSTROM_WEAPON
 			Bar:Show()
-		else -- Restoration, or no spec
+		else -- Restoration, or low level, or no spec
 			buff = nil
 			return Bar:Hide()
 		end
@@ -131,7 +129,7 @@ Bar:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 ShamanChiSpin = true
 
 local PREFIX = "|cff00ddba" .. GetAddOnMetadata("ShamanChi", "Title") .. ":|r "
-local L_HELP_LINE = "- |cffffff7f%s|r - %s"
+local L_HELP_LINE = "- |cffffff7f%s|r - %s (%s)"
 
 local ON, OFF = "|cff7fff7fenabled|r", "|cffff7f7fdisabled|r"
 local L_HELP = "Version %s loaded. Use '/shamanchi' with the following commands:"
@@ -163,19 +161,12 @@ SlashCmdList["SHAMANCHI"] = function(cmd)
 	if cmd == "spin" then
 		ShamanChiSpin = not ShamanChiSpin
 
-		for i = 1, 5 do
-			local Orb = Bar[i]
-			if ShamanChiSpin then
-				if Bar.hasHarmony then
-					Orb.spin:Play()
-				end
-			else
-				Orb.spin:Finish()
-			end
+		if not ShamanChiSpin then
+			Bar.hasHarmony = false
 		end
 
-		return DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_ANIMATION_SET, ShamanChiSpin and ON or OFF))
+		return DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_SPIN_SET, ShamanChiSpin and ON or OFF))
 	end
 	DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_HELP, GetAddOnMetadata("ShamanChi", "Version")))
-	DEFAULT_CHAT_FRAME:AddMessage(format(L_HELP_LINE, L_SPIN, L_SPIN_HELP))
+	DEFAULT_CHAT_FRAME:AddMessage(format(L_HELP_LINE, L_SPIN, L_SPIN_HELP, ShamanChiSpin and ON or OFF))
 end

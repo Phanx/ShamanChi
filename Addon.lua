@@ -162,6 +162,18 @@ SlashCmdList["SHAMANCHI"] = function(cmd)
 	cmd = strlower(strtrim(cmd or ""))
 	if cmd == "spin" then
 		ShamanChiSpin = not ShamanChiSpin
+
+		for i = 1, 5 do
+			local Orb = Bar[i]
+			if ShamanChiSpin then
+				if Bar.hasHarmony then
+					Orb.spin:Play()
+				end
+			else
+				Orb.spin:Finish()
+			end
+		end
+
 		return DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_ANIMATION_SET, ShamanChiSpin and ON or OFF))
 	end
 	DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_HELP, GetAddOnMetadata("ShamanChi", "Version")))

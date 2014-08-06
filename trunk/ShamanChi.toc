@@ -1,0 +1,21 @@
+## Interface: 50400
+## Version: 5.4.8.wowi:revision
+
+## Title: ShamanChi
+## Notes: Displays your Maelstrom Weapon or Lightning Shield stacks using the monk Chi frame.
+## Notes-deDE: Zeigt den Stapel Eures Waffe des Mahlstroms oder Blitzschlagschild auf dem Chi-Fenster der Mönche.
+## Notes-esES: Muestra las pilas de tu Arma vorágine o Escudo de relámpagos en el marco de Chi de monjes.
+## Notes-esMX: Muestra las pilas de tu Arma vorágine o Escudo de relámpagos en el marco de Chi de monjes.
+
+## Author: Phanx
+## X-Email: addons@phanx.net
+## X-Copyright: Copyright 2014 Phanx.
+## X-License: All Rights Reserved. See LICENSE.txt for details.
+## X-CompatibleLocales: deDE, enUS, esES, esMX, frFR, itIT, ptBR, koKR, ruRU, zhCN, zhTW
+## X-Website: http://www.wowinterface.com/downloads/info22714-ShamanChi.html
+## X-Curse-Project-Name: shamanchi
+## X-WoWI-ID: 22714
+
+## SavedVaraiables: ShamanChiSpin
+
+Addon.lua

@@ -30,32 +30,23 @@ Compatible with all locales.
 Translated into English, Deutsch, and Español.
 
 
-
 Feedback
 -----------
 
-To report a bug, suggest a feature, provide translations, ask a question
-about an addon, or give some other form of addon feedback, please
-[post a comment on the WoWInterface download page](http://www.wowinterface.com/downloads/info22714-ShamanChi.html),
-or [post a thread in the WowAce Addon Help forum](http://forums.wowace.com/forumdisplay.php?f=63).
+Post a ticket on either download site, or a comment on WoWInterface.
 
-If you are reporting a bug, please include detailed instructions I can
-follow to reproduce the bug myself, whether or not it still happens
-when all other addons are disabled, and the exact text of the related
-error message (if any) from BugSack.
+If you are reporting a bug, please include directions I can follow to
+reproduce the bug, whether it still happens when all other addons are
+disabled, and the exact text of the related error message (if any) from 
+[BugSack](http://www.wowinterface.com/downloads/info5995-BugSack.html).
 
-
-Contact
-----------
-
-If you need to contact me privately for a reason NOT listed above, you
-can send private messages to Phanx on either download site, or email me
-at addons at phanx net.
+If you need to contact me privately, you can send me a private message
+on either download site, or email me at <addons@phanx.net>.
 
 
 License
 ----------
 
-See the accompanying LICENSE file for the terms under which this addon
-is licensed. In particular, it may not be redistributed without prior
-written permission. Do not upload it to other websites.
+Copyright (c) 2014 Phanx. All rights reserved.  
+See the accompanying LICENSE file for information about the conditions
+under which redistribution and modification may be allowed.

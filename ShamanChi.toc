@@ -1,5 +1,5 @@
-## Interface: 50400
-## Version: 5.4.8.wowi:revision
+## Interface: 60000
+## Version: 6.0.3.wowi:revision
 
 ## Title: ShamanChi
 ## Notes: Displays your Maelstrom Weapon or Lightning Shield stacks using the monk Chi frame.

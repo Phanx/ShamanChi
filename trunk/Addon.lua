@@ -23,11 +23,6 @@ local Bar = MonkHarmonyBar
 local Set = MonkHarmonyBar_SetEnergy
 local Orbs = Bar.LightEnergy or {}
 
-local function OnEnter(self)
-	GameTooltip_SetDefaultAnchor(GameTooltip, self)
-	GameTooltip:SetSpellByID(buff == LIGHTNING_SHIELD and 88766 or 51530) -- Fulmination / Maelstrom Weapon
-end
-
 for i = 1, 5 do
 	local Orb = Bar.LightEnergy[i] or CreateFrame("Frame", nil, MonkHarmonyBar, "MonkLightEnergyTemplate")
 	Orbs[i] = Orb
@@ -43,8 +38,8 @@ for i = 1, 5 do
 	-- Fix the funky animation:
 	Orb.spin:GetAnimations():SetOrigin("CENTER", 0, 0)
 	
-	-- Make the tooltip more relevant:
-	Orb:SetScript("OnEnter", OnEnter)
+	-- Remove irrelevant tooltip:
+	Orb:SetScript("OnEnter", nil)
 	
 	-- Adapted from MonkHarmonyBar_Update:
 	if i > 1 then
@@ -144,50 +139,52 @@ Bar:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 ShamanChiSpin = true
 
 local PREFIX = "|cff00ddba" .. GetAddOnMetadata("ShamanChi", "Title") .. ":|r "
-local L_HELP_LINE = "- |cffffff7f%s|r - %s (%s)"
+local HELP_LINE = "- |cffffff7f%s|r - %s (%s)"
 
-local ON, OFF = "|cff7fff7fenabled|r", "|cffff7f7fdisabled|r"
-local L_HELP = "Version %s loaded. Use '/shamanchi' with the following commands:"
-local L_SPIN = "spin"
-local L_SPIN_HELP = "toggle the spin animation with full stacks"
-local L_SPIN_SET = "Animation now %s."
+local L = {
+	ON = "|cff7fff7fenabled|r"
+	OFF = "|cffff7f7fdisabled|r"
+	HELP = "Version %s loaded. Use '/shamanchi' with the following commands:"
+	SPIN = "spin"
+	SPIN_HELP = "toggle the spin animation with full stacks"
+	SPIN_SET = "Animation now %s."
+	TOOLTIP = "tooltip"
+	TOOLTIP_HELP = "toggle the tooltip on mouseover"
+	TOOLTIP_SET = "Tooltip is now %s."
+}
 
 if GetLocale() == "deDE" then
 	--{{ Deutsch, von Phanx übersetzt
-	ON, OFF = "|cff7fff7faktiviert|r", "|cffff7f7fdeaktiviert|r"
-	L_HELP = "Version %s geladen. Benutzt '/shamanchi' mit diesen Befehlen:"
-	L_SPIN = "drehen"
-	L_SPIN_HELP = "die Kugeln bei vollen Stapel drehen"
-	L_SPIN_SET = "Animation ist jetzt %s."
-	L_TOOLTIP = "tooltipp"
-	L_TOOLTIP_HELP = "der Tooltip bei Mouseover anzuzeigen"
-	L_TOOLTIP_SET = "Tooltip ist jetzt %s."
+	L.ON = "|cffff7f7fdeaktiviert|r"
+	L.OFF = "|cffff7f7fdeaktiviert|r"
+	L.HELP = "Version %s geladen. Benutzt '/shamanchi' mit diesen Befehlen:"
+	L.SPIN = "drehen"
+	L.SPIN_HELP = "die Kugeln bei vollen Stapel drehen"
+	L.SPIN_SET = "Animation ist jetzt %s."
 	--}}
 elseif GetLocale() == "esES" or GetLocale() == "esMX" then
 	--{{ Español, traducido por Phanx
-	ON, OFF = "|cff7fff7factivado|r", "|cffff7f7fdesactivado|r"
-	L_HELP = "Versión %s cargado. Use '/shamanchi' con estos comandos:"
-	L_SPIN = "girar"
-	L_SPIN_HELP = "girar los orbes a las pilas máximas"
-	L_SPIN_SET = "Animación está ahora %s."
-	L_TOOLTIP = "tooltip"
-	L_TOOLTIP_HELP = "mostrar el tooltip al pasar del ratón"
-	L_TOOLTIP_SET = "Tooltip está ahora %s."
+	L.ON = "|cff7fff7factivado|r"
+	L.OFF = "|cffff7f7fdesactivado|r"
+	L.HELP = "Versión %s cargado. Use '/shamanchi' con estos comandos:"
+	L.SPIN = "girar"
+	L.SPIN_HELP = "girar los orbes a las pilas máximas"
+	L.SPIN_SET = "Animación está ahora %s."
 	--}}
 end
 
 SLASH_SHAMANCHI1 = "/shamanchi"
 SlashCmdList["SHAMANCHI"] = function(cmd)
 	cmd = strlower(strtrim(cmd or ""))
-	if cmd == "spin" then
+	if cmd == "spin" or cmd == L.SPIN then
 		ShamanChiSpin = not ShamanChiSpin
 
 		if not ShamanChiSpin then
 			Bar.hasHarmony = false
 		end
 
-		return DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_SPIN_SET, ShamanChiSpin and ON or OFF))
+		return DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L.SPIN_SET, ShamanChiSpin and ON or OFF))
 	end
-	DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L_HELP, GetAddOnMetadata("ShamanChi", "Version")))
-	DEFAULT_CHAT_FRAME:AddMessage(format(L_HELP_LINE, L_SPIN, L_SPIN_HELP, ShamanChiSpin and ON or OFF))
+	DEFAULT_CHAT_FRAME:AddMessage(PREFIX .. format(L.HELP, GetAddOnMetadata("ShamanChi", "Version")))
+	DEFAULT_CHAT_FRAME:AddMessage(format(HELP_LINE, L.SPIN, L.SPIN_HELP, ShamanChiSpin and ON or OFF))
 end

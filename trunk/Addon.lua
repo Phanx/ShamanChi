@@ -12,6 +12,8 @@ if class ~= "SHAMAN" then return end
 
 ------------------------------------------------------------------------
 
+local buff
+
 -- Get the localized buff names without hardcoding them:
 local MAELSTROM_WEAPON = GetSpellInfo(53817)
 local LIGHTNING_SHIELD = GetSpellInfo(324)
@@ -19,28 +21,41 @@ local LIGHTNING_SHIELD = GetSpellInfo(324)
 -- Upvalue some globals for speed:
 local Bar = MonkHarmonyBar
 local Set = MonkHarmonyBar_SetEnergy
+local Orbs = Bar.LightEnergy or {}
+
+local function OnEnter(self)
+	GameTooltip_SetDefaultAnchor(GameTooltip, self)
+	GameTooltip:SetSpellByID(buff == LIGHTNING_SHIELD and 88766 or 51530) -- Fulmination / Maelstrom Weapon
+end
 
 for i = 1, 5 do
-	local Orb = Bar["lightEnergy"..i]
+	local Orb = Bar.LightEnergy[i] or CreateFrame("Frame", nil, MonkHarmonyBar, "MonkLightEnergyTemplate")
+	Orbs[i] = Orb
+
+	-- Adapted from MonkHarmonyBar_UpdateMaxPower:
+	Orb.Glow:SetAtlas("MonkUI-LightOrb", true)
+	Orb.OrbOff:SetAtlas("MonkUI-OrbOff", true)
+
 	-- Give the foreground a more shaman-y color:
 	local _, texture = Orb:GetRegions()
 	texture:SetVertexColor(0.5, 1, 1)
+
 	-- Fix the funky animation:
 	Orb.spin:GetAnimations():SetOrigin("CENTER", 0, 0)
-	-- Avoid wasteful string concatenations. Blizzard, y u do dis?!
-	Bar[i] = Orb
+	
+	-- Make the tooltip more relevant:
+	Orb:SetScript("OnEnter", OnEnter)
+	
+	-- Adapted from MonkHarmonyBar_Update:
+	if i > 1 then
+		Orb:SetPoint("LEFT", Orbs[i-1], "RIGHT", 1, 0)
+	else
+		Orb:SetPoint("LEFT", -46, 1)
+	end
+	Orb:Show()
 end
 
--- Adapted from MonkHarmonyBar_Update:
-Bar[1]:SetPoint("LEFT", -46, 1)
-Bar[2]:SetPoint("LEFT", Bar[1], "RIGHT", 1, 0)
-Bar[3]:SetPoint("LEFT", Bar[2], "RIGHT", 1, 0)
-Bar[4]:SetPoint("LEFT", Bar[3], "RIGHT", 1, 0)
-Bar[5]:Show()
-
 -- Replace MonkHarmonyBar_OnEvent with shaman-specific stuff:
-local buff
-
 function Bar:Update()
 	if not buff then
 		return self:Hide()
@@ -50,14 +65,14 @@ function Bar:Update()
 	if not count then
 		count = 0
 	elseif buff == LIGHTNING_SHIELD then
-		count = count - 2
+		count = count / 3
 	end
 
 	local full = count == 5 and ShamanChiSpin
 	self.hasHarmony = full
 
 	for i = 1, 5 do
-		local Orb = self[i]
+		local Orb = Orbs[i]
 		Set(Orb, i <= count)
 		if full then
 			Orb.spin:Play()
@@ -138,20 +153,26 @@ local L_SPIN_HELP = "toggle the spin animation with full stacks"
 local L_SPIN_SET = "Animation now %s."
 
 if GetLocale() == "deDE" then
-	--{{ Deutsch, von Phanx
-	ON, OFF = "|cff7fff7fAN|r", "|cffff7f7fAUS|r"
-	L_HELP = "Version %s geladen. Benutzt '/shamanchi' bei diesen Befehlen:"
+	--{{ Deutsch, von Phanx übersetzt
+	ON, OFF = "|cff7fff7faktiviert|r", "|cffff7f7fdeaktiviert|r"
+	L_HELP = "Version %s geladen. Benutzt '/shamanchi' mit diesen Befehlen:"
 	L_SPIN = "drehen"
-	L_SPIN_HELP = "die drehende Animation bei vollen Stapel umschalten"
+	L_SPIN_HELP = "die Kugeln bei vollen Stapel drehen"
 	L_SPIN_SET = "Animation ist jetzt %s."
+	L_TOOLTIP = "tooltipp"
+	L_TOOLTIP_HELP = "der Tooltip bei Mouseover anzuzeigen"
+	L_TOOLTIP_SET = "Tooltip ist jetzt %s."
 	--}}
 elseif GetLocale() == "esES" or GetLocale() == "esMX" then
-	--{{ Español, por Phanx
+	--{{ Español, traducido por Phanx
 	ON, OFF = "|cff7fff7factivado|r", "|cffff7f7fdesactivado|r"
-	L_HELP = "Versión %s cargado. Usar '/shamanchi' con estos comandos:"
+	L_HELP = "Versión %s cargado. Use '/shamanchi' con estos comandos:"
 	L_SPIN = "girar"
-	L_SPIN_HELP = "activar/desactivar la animación giranda con pilas máximas"
-	L_SPIN_SET = "Animación es ahora %s."
+	L_SPIN_HELP = "girar los orbes a las pilas máximas"
+	L_SPIN_SET = "Animación está ahora %s."
+	L_TOOLTIP = "tooltip"
+	L_TOOLTIP_HELP = "mostrar el tooltip al pasar del ratón"
+	L_TOOLTIP_SET = "Tooltip está ahora %s."
 	--}}
 end
 

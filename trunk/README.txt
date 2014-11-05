@@ -4,8 +4,7 @@ ShamanChi
 Displays your Maelstrom Weapon and Lightning Shield stacks using the
 monk Chi frame.
 
-For Lightning Shield, the first 2 charges are not displayed, since
-there are only 5 Chi orbs.
+For Lightning Shield, each Chi orb represents 3 charges.
 
 When you have a full stack of your buff, the orbs will spin; this
 animation is part of the default UI, but for some reason Blizzard

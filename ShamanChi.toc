@@ -1,9 +1,9 @@
 ## Interface: 60000
-## Version: 6.0.3.10
+## Version: @project-version@
 
 ## Title: ShamanChi
 ## Notes: Displays your Maelstrom Weapon or Lightning Shield stacks using the monk Chi frame.
-## Notes-deDE: Zeigt den Stapel Eurer Waffe des Mahlstroms oder Blitzschlagschild auf dem Chi-Fenster der Mönche.
+## Notes-deDE: Zeigt die Stapel Eurer Waffe des Mahlstroms oder Blitzschlagschild auf dem Monk-Chi-Fenster.
 ## Notes-esES: Mostrar las pilas de tu Arma vorágine o Escudo de relámpagos en el marco de Chi de monjes.
 ## Notes-esMX: Mostrar las pilas de tu Arma vorágine o Escudo de relámpagos en el marco de Chi de monjes.
 

@@ -18,6 +18,8 @@ local buff
 local MAELSTROM_WEAPON = GetSpellInfo(53817)
 local LIGHTNING_SHIELD = GetSpellInfo(324)
 
+local LIGHTNING_PER_ORB = 3 -- changes to 4 when Improved Lightning Shield is known
+
 -- Upvalue some globals for speed:
 local Bar = MonkHarmonyBar
 local Set = MonkHarmonyBar_SetEnergy
@@ -60,7 +62,7 @@ function Bar:Update()
 	if not count then
 		count = 0
 	elseif buff == LIGHTNING_SHIELD then
-		count = count / 3
+		count = count / LIGHTNING_PER_ORB
 	end
 
 	local full = count == 5 and ShamanChiSpin
@@ -85,6 +87,7 @@ Bar:SetScript("OnEvent", function(self, event)
 			Bar:Show()
 		elseif spec == 2 and level >= 50 then -- Enhancement
 			buff = MAELSTROM_WEAPON
+			LIGHTNING_PER_ORB = IsSpellKnown(157774) and 4 or 3 -- Improved Lightning Shield +5 charges
 			Bar:Show()
 		else -- Restoration, or low level, or no spec
 			buff = nil
@@ -132,6 +135,7 @@ end)
 
 Bar:RegisterEvent("PLAYER_ENTERING_WORLD")
 Bar:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+Bar:RegisterEvent("LEARNED_SPELL_IN_TAB")
 
 ------------------------------------------------------------------------
 -- Settings
@@ -148,13 +152,9 @@ local L = {
 	SPIN = "spin"
 	SPIN_HELP = "toggle the spin animation with full stacks"
 	SPIN_SET = "Animation now %s."
-	TOOLTIP = "tooltip"
-	TOOLTIP_HELP = "toggle the tooltip on mouseover"
-	TOOLTIP_SET = "Tooltip is now %s."
 }
-
 if GetLocale() == "deDE" then
-	--{{ Deutsch, von Phanx übersetzt
+	--{{ Translators: Phanx
 	L.ON = "|cffff7f7fdeaktiviert|r"
 	L.OFF = "|cffff7f7fdeaktiviert|r"
 	L.HELP = "Version %s geladen. Benutzt '/shamanchi' mit diesen Befehlen:"
@@ -163,7 +163,7 @@ if GetLocale() == "deDE" then
 	L.SPIN_SET = "Animation ist jetzt %s."
 	--}}
 elseif GetLocale() == "esES" or GetLocale() == "esMX" then
-	--{{ Español, traducido por Phanx
+	--{{ Translators: Phanx
 	L.ON = "|cff7fff7factivado|r"
 	L.OFF = "|cffff7f7fdesactivado|r"
 	L.HELP = "Versión %s cargado. Use '/shamanchi' con estos comandos:"

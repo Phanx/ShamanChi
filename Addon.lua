@@ -1,7 +1,7 @@
 --[[--------------------------------------------------------------------
 	ShamanChi
 	Displays Maelstrom Weapon and Lightning Shield like monks' Chi.
-	Copyright (c) 2014 Phanx <addons@phanx.net>. All rights reserved.
+	Copyright (c) 2014-2015 Phanx <addons@phanx.net>. All rights reserved.
 	http://www.wowinterface.com/downloads/info22714-ShamanChi.html
 	http://www.curse.com/addons/wow/shamanchi
 	https://github.com/Phanx/ShamanChi
@@ -146,12 +146,12 @@ local PREFIX = "|cff00ddba" .. GetAddOnMetadata("ShamanChi", "Title") .. ":|r "
 local HELP_LINE = "- |cffffff7f%s|r - %s (%s)"
 
 local L = {
-	ON = "|cff7fff7fenabled|r"
-	OFF = "|cffff7f7fdisabled|r"
-	HELP = "Version %s loaded. Use '/shamanchi' with the following commands:"
-	SPIN = "spin"
-	SPIN_HELP = "toggle the spin animation with full stacks"
-	SPIN_SET = "Animation now %s."
+	ON = "|cff7fff7fenabled|r",
+	OFF = "|cffff7f7fdisabled|r",
+	HELP = "Version %s loaded. Use '/shamanchi' with the following commands:",
+	SPIN = "spin",
+	SPIN_HELP = "toggle the spin animation with full stacks",
+	SPIN_SET = "Animation now %s.",
 }
 if GetLocale() == "deDE" then
 	--{{ Translators: Phanx

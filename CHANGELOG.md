@@ -1,3 +1,7 @@
+### Version 6.1.0.5
+
+* Updated for WoW 6.1
+
 ### Version 6.0.3.4
 
 * Updated to support Improved Lightning Shield perk -- with it, each orb represents 4 charges instead of 3

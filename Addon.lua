@@ -1,7 +1,7 @@
 --[[--------------------------------------------------------------------
 	ShamanChi
 	Displays Maelstrom Weapon and Lightning Shield like monks' Chi.
-	Copyright (c) 2014 Phanx <addons@phanx.net>. All rights reserved.
+	Copyright (c) 2014-2015 Phanx <addons@phanx.net>. All rights reserved.
 	http://www.wowinterface.com/downloads/info22714-ShamanChi.html
 	http://www.curse.com/addons/wow/shamanchi
 	https://github.com/Phanx/ShamanChi
